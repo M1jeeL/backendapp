@@ -117,3 +117,20 @@ class ProfileSerializer(serializers.ModelSerializer):
             'username',
             'email'
         )
+
+
+### OBTENER CASO POR ID ###
+
+
+class GetcasebyIdSerializer(serializers.ModelSerializer):
+   class Meta:
+    model =  Case
+    fields = (
+         'name',
+         'description',
+         'files',
+         'type_status',
+         'status',
+         'chat_preference'
+    )
+

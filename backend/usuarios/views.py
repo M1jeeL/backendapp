@@ -12,7 +12,7 @@ from rest_framework import generics, serializers
 from rest_framework import status
 from rest_framework.response import Response
 
-from .models import Client, User
+from .models import Client, User, Case
 
 ####        CLIENTE        ####
 
@@ -76,6 +76,13 @@ def logout_client(request):
     logout(request)
     return Response({'Logout': "[-] Logout successfuly!"}, status=status.HTTP_200_OK)
 
+
+### BUSCAR CASOS POR ID ###
+@api_view(['GET'])
+def get_id (request, id):
+    cases = Case.objects.get(id=id)
+    serializers = GetcasebyIdSerializer (cases,many=true)
+    return Response(serializer.data)
 
 ###     CAMBIAR CONTRASEÑA     ###
 @receiver(reset_password_token_created)
