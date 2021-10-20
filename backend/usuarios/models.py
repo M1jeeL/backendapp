@@ -156,3 +156,4 @@ class Case(models.Model):
     class Meta:
         verbose_name = 'case'
         verbose_name_plural = 'cases'
+        #EJEMPLO
