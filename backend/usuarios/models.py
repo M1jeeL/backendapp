@@ -130,7 +130,7 @@ class Case(models.Model):
     name = models.CharField(max_length=60)
     files = models.FileField(upload_to='documents/cases/', verbose_name='Casos')
     description = models.CharField(max_length=300)
-    type = models.CharField(
+    type_status = models.CharField(
         max_length=1,
         null=False, blank=False,
         choices=type_status,
