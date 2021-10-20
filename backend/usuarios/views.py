@@ -2,7 +2,7 @@ from django.shortcuts import render
 from rest_auth.registration.views import RegisterView
 from .serializers import (
     TeacherRegistrationSerializer, ClientRegistrationSerializer,
-    LoginSerializer, ProfileSerializer)
+    LoginSerializer, ProfileSerializer, CreateCaseSerializer)
 from django.contrib.auth import authenticate, login, logout
 from django.db.models import query
 from django_rest_passwordreset.signals import reset_password_token_created
@@ -82,3 +82,7 @@ def logout_client(request):
 def reset_password(sender, instance, reset_password_token, *args, **kwargs):
     print(
         f"\n[+]Recupera la contraseña del correo '{reset_password_token.user.email}' \n[-]Usando el token '{reset_password_token.key}' desde la API http://localhost:8000/user/reset_password/confirm/.")
+
+### CREAR CASO ###
+class CreateCaseView(RegisterView):
+    serializer_class = CreateCaseSerializer

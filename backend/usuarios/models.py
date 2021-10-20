@@ -130,7 +130,7 @@ class Case(models.Model):
     name = models.CharField(max_length=60)
     files = models.FileField(upload_to='documents/cases/', verbose_name='Casos')
     description = models.CharField(max_length=300)
-    type = models.CharField(
+    type_status = models.CharField(
         max_length=1,
         null=False, blank=False,
         choices=type_status,
@@ -151,7 +151,7 @@ class Case(models.Model):
     
     created_at = models.DateTimeField(auto_now_add=True,verbose_name="Fecha Creacion")
     updated_at = models.DateTimeField(auto_now=True,verbose_name="Fecha Actualizacion")
-    finished_at = models.DateTimeField(auto_now=True,verbose_name="Fecha Cierre")
+    finished_at = models.DateTimeField(auto_now=False,verbose_name="Fecha Cierre",blank=True, null=True)
 
     class Meta:
         verbose_name = 'case'
