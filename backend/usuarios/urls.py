@@ -31,6 +31,11 @@ urlpatterns = [
     ###     Muestra todos los Usuarios     ###
     path('users/', views.ProfilesViewUser.as_view(), name='Usuarios'),
 
+    ### CASOS   ###
+
+    ###     UPDATE CASOS    ###
+    path('cases/update/<int:id>', views.put_id, name='update_casos'),
+
     ####        CAMBIO DE CONTRASEÑA USUARIOS        ####
     path('user/reset_password/', include('django_rest_passwordreset.urls', namespace='reset_pass_client')),
 ]
