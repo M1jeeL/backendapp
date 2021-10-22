@@ -86,6 +86,66 @@ def reset_password(sender, instance, reset_password_token, *args, **kwargs):
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ###     LISTA CASOS     ###
 @api_view(['GET'])
 def case_get_all(request):
