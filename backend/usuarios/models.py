@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.db.models.fields import related
 #from django.conf import settings
 
 
@@ -86,7 +87,6 @@ class Teacher(models.Model):
     #cases = models.ManyToManyField(
     #    Case, on_delete=models.CASCADE, blank=True, null=True)
 
-
     ###     ATRIBUTOS     ###
     rut = models.CharField(max_length=12, verbose_name='RUT')
     phone = models.CharField(max_length=10, null=True, blank=True, verbose_name="Telefono")
@@ -125,7 +125,9 @@ class Case(models.Model):
         Teacher, on_delete=models.CASCADE, blank=True, null=True)
     case_client = models.OneToOneField(
         Client, on_delete=models.CASCADE, blank=True, null=True)
-    
+    #cases_client = models.ForeignKey(Teacher, related_name='RUT', on_delete=models.CASCADE,null=True, blank=True)
+    #cases_client = models.ForeignKey(Client, related_name='RUT', on_delete=models.CASCADE)
+
     ###     ATRIBUTOS     ###
     name = models.CharField(max_length=60)
     files = models.FileField(upload_to='documents/cases/', verbose_name='Casos')
@@ -141,6 +143,7 @@ class Case(models.Model):
         null=False, blank=False,
         choices=status,
         default="Disponible"
+        
     )
     chat_preference = models.CharField(
         max_length=1,
