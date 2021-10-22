@@ -40,6 +40,6 @@ urlpatterns = [
     path('cases/create/', CreateCaseView.as_view()),
     ###
     path('cases/', views.CasesViews.as_view(), name='Casos'),
-    path('cases/<str:status>', views.list_case_status),
+    path('cases/<int:id>', views.list_case_status),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

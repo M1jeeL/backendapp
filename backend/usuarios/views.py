@@ -95,7 +95,7 @@ class CasesViews(generics.ListAPIView):
 
 ###     FILTRADO POR ESTADO    ###
 @api_view(['GET'])
-def list_case_status(request, type_status):
-    case = Case.objects.get(status=type_status)
-    serializer = CaseSerializer(case, many=True)
+def list_case_status(request, id):
+    case = Case.objects.get(id=id)
+    serializer = CaseSerializer(case, many=False)
     return Response(serializer.data, status=status.HTTP_200_OK)
