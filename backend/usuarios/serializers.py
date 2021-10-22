@@ -126,6 +126,7 @@ class GetcasebyIdSerializer(serializers.ModelSerializer):
    class Meta:
     model =  Case
     fields = (
+         "id",
          'name',
          'description',
          'files',
