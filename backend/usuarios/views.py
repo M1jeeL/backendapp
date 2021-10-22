@@ -2,7 +2,7 @@ from django.shortcuts import render
 from rest_auth.registration.views import RegisterView
 from .serializers import (
     TeacherRegistrationSerializer, ClientRegistrationSerializer,
-    LoginSerializer, ProfileSerializer, CreateCaseSerializer)
+    LoginSerializer, ProfileSerializer, CreateCaseSerializer, CaseSerializer)
 from django.contrib.auth import authenticate, login, logout
 from django.db.models import query
 from django_rest_passwordreset.signals import reset_password_token_created
@@ -12,7 +12,7 @@ from rest_framework import generics, serializers
 from rest_framework import status
 from rest_framework.response import Response
 
-from .models import Client, User
+from .models import Client, User, Case
 
 ####        CLIENTE        ####
 
@@ -88,9 +88,14 @@ class CreateCaseView(RegisterView):
     serializer_class = CreateCaseSerializer
 
 ###     LISTA CASOS     ###
-@api_view(['GET'])
-def case_get_all(request):
-    cases = Case.objects.get()
-    serializer = CaseSerializer(cases, many=True)
-    return Response(serializer.data, stauts=status.HTTP_200_OK)
+class CasesViews(generics.ListAPIView):
+    queryset = Case.objects.all()
+    serializer_class = CaseSerializer
 
+
+###     FILTRADO POR ESTADO    ###
+@api_view(['GET'])
+def list_case_status(request, type_status):
+    case = Case.objects.get(status=type_status)
+    serializer = CaseSerializer(case, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)

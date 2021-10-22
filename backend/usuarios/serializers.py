@@ -192,6 +192,7 @@ class CaseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Case
         fields = (
+            'id',
             'name',
             'description',
             'type_status',
