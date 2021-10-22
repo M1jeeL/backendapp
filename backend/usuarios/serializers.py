@@ -4,7 +4,7 @@ from django.contrib.auth import get_user_model
 from rest_auth.registration.serializers import RegisterSerializer
 from rest_framework.authtoken.models import Token
 #from django.contrib.auth.hashers import make_password
-from .models import Client, Teacher, User
+from .models import Case, Client, Teacher, User
 
 ###     VARIABLES GLOBALES     ###
 expertise_status = [
@@ -116,4 +116,16 @@ class ProfileSerializer(serializers.ModelSerializer):
             'id',
             'username',
             'email'
+        )
+
+###     PERFIL DE CASOS     ###
+class CaseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Case
+        fields = (
+            'name',
+            'description',
+            'type_status',
+            'status',
+            'chat_preference'
         )
