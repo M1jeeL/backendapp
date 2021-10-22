@@ -2,7 +2,7 @@ from django.shortcuts import render
 from rest_auth.registration.views import RegisterView
 from .serializers import (
     TeacherRegistrationSerializer, ClientRegistrationSerializer,
-    LoginSerializer, ProfileSerializer, CaseSerializer)
+    LoginSerializer, ProfileSerializer)
 from django.contrib.auth import authenticate, login, logout
 from django.db.models import query
 from django_rest_passwordreset.signals import reset_password_token_created
