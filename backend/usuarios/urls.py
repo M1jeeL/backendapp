@@ -1,4 +1,4 @@
-from django.urls import path, include
+from django.urls import path, include,re_path
 
 from .views import TeacherRegistrationView, ClientRegistrationView, CreateCaseView
 from . import views
@@ -39,7 +39,8 @@ urlpatterns = [
     ###      Create Case ###
     path('cases/create/', CreateCaseView.as_view()),
     ###
-    path('cases/', views.CasesViews.as_view(), name='Casos'),
-    path('cases/<int:id>', views.list_case_status),
+    path('cases/',views.list_cases,name='Casos'),
+    re_path('^cases/(?P<type>\w+)/(?P<status>[\w-]+)/$', views.list_cases, name='Casos'),
+    # path('cases/<int:id>', views.list_case_status),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

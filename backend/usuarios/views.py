@@ -3,7 +3,7 @@ from rest_auth.registration.views import RegisterView
 from .serializers import (
     TeacherRegistrationSerializer, ClientRegistrationSerializer,
     LoginSerializer, ProfileSerializer, CreateCaseSerializer, CaseSerializer)
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import SESSION_KEY, authenticate, login, logout
 from django.db.models import query
 from django_rest_passwordreset.signals import reset_password_token_created
 from django.dispatch import receiver
@@ -92,10 +92,42 @@ class CasesViews(generics.ListAPIView):
     queryset = Case.objects.all()
     serializer_class = CaseSerializer
 
-
-###     FILTRADO POR ESTADO    ###
 @api_view(['GET'])
-def list_case_status(request, id):
-    case = Case.objects.get(id=id)
-    serializer = CaseSerializer(case, many=False)
+def list_cases(request):
+    
+    stat = request.query_params.get('status')
+    type = request.query_params.get('type')
+    querySet = query_all_avaible()
+    if (stat is not None and type is not None):
+        querySet = query_by_type_status(stat)
+    elif (type is not None and stat is None):
+        querySet = query_by_type(type)
+    elif (type is None  and stat is not None):
+        querySet = query_by_status(stat)
+    serializer = CaseSerializer(querySet,many=True)
+    print(serializer)
     return Response(serializer.data, status=status.HTTP_200_OK)
+
+    
+def query_all_avaible():
+    querySet = Case.objects.filter(status= 'D')
+    return querySet
+
+def query_by_status(status):
+    querySet = Case.objects.filter(status=status)
+    return querySet
+
+def query_by_type(type):
+    querySet = Case.objects.filter(type_status=type).filter(status='A')
+    return querySet
+
+def query_by_type_status(type,status):
+    querySet = Case.objects.filter(type_status=type).filter(status=status)
+    return querySet
+
+# ###     FILTRADO POR ESTADO    ###
+# @api_view(['GET'])
+# def list_case_status(request, id):
+#     case = Case.objects.get(id=id)
+#     serializer = CaseSerializer(case, many=False)
+#     return Response(serializer.data, status=status.HTTP_200_OK)
