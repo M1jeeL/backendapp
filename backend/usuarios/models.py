@@ -101,9 +101,8 @@ class Teacher(models.Model):
     )
     careers= models.CharField(
         max_length=100,
-        null=False, blank=False,
-        choices=careers_status,
-        default=""
+        null=True, blank=True,
+        verbose_name="Institucion Educacion Superior"
     )
 
     created_at = models.DateTimeField(auto_now_add=True,verbose_name="Fecha Creacion")
