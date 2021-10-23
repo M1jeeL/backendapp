@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from rest_auth.registration.views import RegisterView
+from rest_framework.fields import empty
 from .serializers import (
     TeacherRegistrationSerializer, ClientRegistrationSerializer,
     LoginSerializer, ProfileSerializer, CreateCaseSerializer, CaseSerializer)
@@ -94,18 +95,20 @@ class CasesViews(generics.ListAPIView):
 
 @api_view(['GET'])
 def list_cases(request):
-    
     stat = request.query_params.get('status')
     type = request.query_params.get('type')
     querySet = query_all_avaible()
-    if (stat is not None and type is not None):
-        querySet = query_by_type_status(stat)
-    elif (type is not None and stat is None):
+
+    if (stat  and type ):
+        print(1)
+        querySet = query_by_type_status(type,stat)
+    elif (type and (stat is None or stat is "")):
+        print(2)
         querySet = query_by_type(type)
-    elif (type is None  and stat is not None):
+    elif ((type is None or type is "")  and stat ):
+        print(3)
         querySet = query_by_status(stat)
     serializer = CaseSerializer(querySet,many=True)
-    print(serializer)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
     
@@ -118,7 +121,7 @@ def query_by_status(status):
     return querySet
 
 def query_by_type(type):
-    querySet = Case.objects.filter(type_status=type).filter(status='A')
+    querySet = Case.objects.filter(type_status=type).filter(status='D')
     return querySet
 
 def query_by_type_status(type,status):

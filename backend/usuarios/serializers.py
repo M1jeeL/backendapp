@@ -189,6 +189,7 @@ class CreateCaseSerializer(serializers.ModelSerializer):
 
 ###     PERFIL DE CASOS     ###
 class CaseSerializer(serializers.ModelSerializer):
+    
     class Meta:
         model = Case
         fields = (
@@ -197,5 +198,7 @@ class CaseSerializer(serializers.ModelSerializer):
             'description',
             'type_status',
             'status',
-            'chat_preference'
+            'chat_preference',
+            'case_teacher',
+            'case_client'
         )
