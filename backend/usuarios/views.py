@@ -100,13 +100,10 @@ def list_cases(request):
     querySet = query_all_avaible()
 
     if (stat  and type ):
-        print(1)
         querySet = query_by_type_status(type,stat)
     elif (type and (stat is None or stat is "")):
-        print(2)
         querySet = query_by_type(type)
     elif ((type is None or type is "")  and stat ):
-        print(3)
         querySet = query_by_status(stat)
     serializer = CaseSerializer(querySet,many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
