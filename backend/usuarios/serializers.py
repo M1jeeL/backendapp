@@ -167,7 +167,7 @@ class CaseSerializer(serializers.ModelSerializer):
         model = Case
         fields = (
             'id',
-            'name',
+            'title',
             'description',
             'type_status',
             'status',
@@ -182,7 +182,7 @@ class CaseByIdSerializer(serializers.ModelSerializer):
         model =  Case
         fields = (
             "id",
-            'name',
+            'title',
             'description',
             'files',
             'type_status',
