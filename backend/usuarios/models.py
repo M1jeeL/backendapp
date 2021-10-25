@@ -120,10 +120,10 @@ class Teacher(models.Model):
 
 ###     TABLA CASOS     ###
 class Case(models.Model):
-    case_teacher = models.OneToOneField(
-        Teacher, on_delete=models.CASCADE, blank=True, null=True)
-    case_client = models.OneToOneField(
-        Client, on_delete=models.CASCADE, blank=True, null=True)
+    #case_teacher = models.OneToOneField(
+    #    Teacher, on_delete=models.CASCADE, blank=True, null=True)
+    #case_client = models.OneToOneField(
+    #    Client, on_delete=models.CASCADE, blank=True, null=True)
     #client = models.ForeignKey(Client, on_delete=models.CASCADE, blank=True, null=True)
     #client_ide =  models.CharField(max_length=60,blank=True, null=True)
     title = models.CharField(max_length=60)
