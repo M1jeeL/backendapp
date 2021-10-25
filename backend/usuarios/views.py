@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from rest_auth.registration.views import RegisterView
 from .serializers import (
     TeacherRegistrationSerializer, ClientRegistrationSerializer,
-    LoginSerializer, ProfileSerializer, CreateCaseSerializer,CreateCase2Serializer)
+    LoginSerializer, ProfileSerializer, CreateCase2Serializer)
 from django.contrib.auth import authenticate, login, logout
 from django.db.models import query
 from django_rest_passwordreset.signals import reset_password_token_created
@@ -15,7 +15,7 @@ from rest_framework import generics, serializers
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
-from .models import Case, Client, User, Case2
+from .models import  Client, User, Case2
 
 ####        CLIENTE        ####
 
@@ -91,14 +91,14 @@ def reset_password(sender, instance, reset_password_token, *args, **kwargs):
 
 
 @api_view(['POST'])
-def savecase(request,email=None  ):
+def savecase(request  ):
     
         if request.method == "POST":
             CASEserialize= CreateCase2Serializer(data=request.data)
             if CASEserialize.is_valid() :
                
                     
-                Case2.client_ide = User.objects.get(email=email)
+                Case2.client_ide = Client.rut
                 
                 
                 

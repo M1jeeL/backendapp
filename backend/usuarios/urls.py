@@ -1,6 +1,6 @@
 from django.urls import path, include
 
-from .views import TeacherRegistrationView, ClientRegistrationView, CreateCaseView
+from .views import TeacherRegistrationView, ClientRegistrationView
 from . import views
 from django.conf import settings
 from django.conf.urls.static import static
@@ -37,7 +37,7 @@ urlpatterns = [
     ###         CASES       ###
 
     ###      Create Case ###
-    path('cases/create/', CreateCaseView.as_view()),
+    
     path('cases/create2/', views.savecase,name="savecase"),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

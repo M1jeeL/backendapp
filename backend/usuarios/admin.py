@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Case, User, Teacher, Client,Case2
+from .models import  User, Teacher, Client,Case2
 # Register your models here.
 
 admin.site.register(User)
