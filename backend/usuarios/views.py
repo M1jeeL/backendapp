@@ -124,10 +124,3 @@ def query_by_type(type):
 def query_by_type_status(type,status):
     querySet = Case.objects.filter(type_status=type).filter(status=status)
     return querySet
-
-# ###     FILTRADO POR ESTADO    ###
-# @api_view(['GET'])
-# def list_case_status(request, id):
-#     case = Case.objects.get(id=id)
-#     serializer = CaseSerializer(case, many=False)
-#     return Response(serializer.data, status=status.HTTP_200_OK)
