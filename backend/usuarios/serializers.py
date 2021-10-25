@@ -171,9 +171,9 @@ class CaseSerializer(serializers.ModelSerializer):
             'description',
             'type_status',
             'status',
-            'chat_preference',
-            'case_teacher',
-            'case_client'
+            'chat_preference'
+            #'case_teacher',
+            #'case_client'
         )
 
 ### OBTENER CASO POR ID ###
