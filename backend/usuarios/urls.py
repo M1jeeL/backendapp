@@ -1,6 +1,6 @@
-from django.urls import path, include
+from django.urls import path, include,re_path
 
-from .views import TeacherRegistrationView, ClientRegistrationView
+from .views import TeacherRegistrationView, ClientRegistrationView, CreateCaseView
 from . import views
 from django.conf import settings
 from django.conf.urls.static import static
@@ -31,12 +31,17 @@ urlpatterns = [
     ###     Muestra todos los Usuarios     ###
     path('users/', views.ProfilesViewUser.as_view(), name='Usuarios'),
 
-    ### CASOS   ###
-
-    ###     UPDATE CASOS    ###
-    path('cases/update/<int:id>', views.put_id, name='update_casos'),
-
     ####        CAMBIO DE CONTRASEÑA USUARIOS        ####
     path('user/reset_password/', include('django_rest_passwordreset.urls', namespace='reset_pass_client')),
+    
+    ###         CASES       ###
+
+    ###      Create Case ###
+    path('cases/create/', CreateCaseView.as_view()),
+    ###
+    path('cases/',views.list_cases,name='Casos'),
+    path('cases/update/<int:id>', views.edit_case, name='update_casos'),
+    re_path('^cases/(?P<type>\w+)/(?P<status>[\w-]+)/$', views.list_cases, name='Casos'),
+    # path('cases/<int:id>', views.list_case_status),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

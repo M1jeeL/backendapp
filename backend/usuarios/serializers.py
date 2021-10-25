@@ -4,7 +4,7 @@ from django.contrib.auth import get_user_model
 from rest_auth.registration.serializers import RegisterSerializer
 from rest_framework.authtoken.models import Token
 #from django.contrib.auth.hashers import make_password
-from .models import Case, Client, Teacher, User
+from .models import Client, Teacher, User, Case
 
 ###     VARIABLES GLOBALES     ###
 expertise_status = [
@@ -12,11 +12,30 @@ expertise_status = [
     ('F', 'Financiera')
 ]
 
+type_status = [
+    ('L', 'Legal'),
+    ('F', 'Financiera'),
+    ('A', 'Ambos')
+]
+
 careers_status = [
     ('abogado', 'Derecho'),
     ('ingeniero economico', 'Ingeniero en economia'),
     ('Ingeniero industrial', 'Ingeniero industrial'),
-    ('Ingeniero informatico', 'Ingeniero en informatica'),
+    ('Ingeniero informatico', 'Ingeniero en informatica')
+]
+
+status = [
+    ('D', 'Disponible'),
+    ('A', 'Asignado'),
+    ('S', 'Solicitud Cierre'),
+    ('C', 'Cerrado')
+]
+
+chat_preference = [
+    ('0', 'ChatApp'),
+    ('1', 'Llamada'),
+    ('2', 'Ambas')
 ]
 
 ##########      SERIALIZADORES     ########## 
@@ -119,13 +138,74 @@ class ProfileSerializer(serializers.ModelSerializer):
         )
 
 
+###     CREATE CASE             ####
 
-###     OBTENER UPDATE POR ID   ###
+class CreateCaseSerializer(serializers.ModelSerializer):
+    name = serializers.CharField(required=True)
+    description = serializers.CharField(required=True)
+    files = serializers.FileField(required=False)
+    type_status = serializers.ChoiceField(required=True,choices=type_status)
+    status = serializers.ChoiceField(required=True,choices=status)
+    chat_preference = serializers.ChoiceField(required=True,choices=chat_preference)
+    class Meta:
+        model = Case
+        fields = (
+            'name',
+            'description',
+            'files',
+            'type_status',
+            'status',
+            'chat_preference'
+        )
+    def get_cleaned_data(self):
+            data = super(CreateCaseSerializer, self).get_cleaned_data()
+            extra_data = {
+                'name' : self.validated_data.get('name', ''),
+                'description' : self.validated_data.get('description', ''),
+                'files' : self.validated_data.get('files', ''),
+                'type_status': self.validated_data.get('type_status', ''),
+                'status' : self.validated_data.get('status', ''),
+                'chat_preference' : self.validated_data.get('chat_preference', ''),
+                
+            }
+            data.update(extra_data)
+            return data
+
+    def save(self, request):
+        
+        
+        
+        case = Case(
+            
+            name = self.validated_data.get('name', ''),
+                description = self.validated_data.get('description', ''),
+                files = self.validated_data.get('files', ''),
+                type_status = self.validated_data.get('type_status', ''),
+                status = self.validated_data.get('status', ''),
+                chat_preference = self.validated_data.get('chat_preference', ''),
+            )
+        case.save()
+        return case    
+
+###     PERFIL DE CASOS     ###
+class CaseSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Case
+        fields = (
+            'id',
+            'name',
+            'description',
+            'type_status',
+            'status',
+            'chat_preference',
+            'case_teacher',
+            'case_client'
+        )
 
 class PutcasebyIdSerializer(serializers.ModelSerializer):
     class Meta:
         model = Case
         fields = (
-            'name',
-            'type_status'
+            'status',
         )
