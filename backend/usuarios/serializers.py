@@ -4,7 +4,7 @@ from django.contrib.auth import get_user_model
 from rest_auth.registration.serializers import RegisterSerializer
 from rest_framework.authtoken.models import Token
 #from django.contrib.auth.hashers import make_password
-from .models import Client, Teacher, User, Case
+from .models import Client, Teacher, User, Case, Case2
 
 ###     VARIABLES GLOBALES     ###
 expertise_status = [
@@ -140,49 +140,27 @@ class ProfileSerializer(serializers.ModelSerializer):
 
 ###     CREATE CASE             ####
 
-class CreateCaseSerializer(serializers.ModelSerializer):
-    name = serializers.CharField(required=True)
+
+
+class CreateCase2Serializer(serializers.ModelSerializer):
+    title = serializers.CharField(required=True)
     description = serializers.CharField(required=True)
     files = serializers.FileField(required=False)
     type_status = serializers.ChoiceField(required=True,choices=type_status)
-    status = serializers.ChoiceField(required=True,choices=status)
+    status = serializers.ChoiceField(choices=status,read_only=True)
     chat_preference = serializers.ChoiceField(required=True,choices=chat_preference)
+    client_ide = serializers.CharField(required = False)
+    
+    
     class Meta:
-        model = Case
+        model = Case2
         fields = (
-            'name',
+            'client_ide',
+            'title',
             'description',
             'files',
             'type_status',
             'status',
             'chat_preference'
         )
-    def get_cleaned_data(self):
-            data = super(CreateCaseSerializer, self).get_cleaned_data()
-            extra_data = {
-                'name' : self.validated_data.get('name', ''),
-                'description' : self.validated_data.get('description', ''),
-                'files' : self.validated_data.get('files', ''),
-                'type_status': self.validated_data.get('type_status', ''),
-                'status' : self.validated_data.get('status', ''),
-                'chat_preference' : self.validated_data.get('chat_preference', ''),
-                
-            }
-            data.update(extra_data)
-            return data
-
-    def save(self, request):
-        
-        
-        
-        case = Case(
-            
-            name = self.validated_data.get('name', ''),
-                description = self.validated_data.get('description', ''),
-                files = self.validated_data.get('files', ''),
-                type_status = self.validated_data.get('type_status', ''),
-                status = self.validated_data.get('status', ''),
-                chat_preference = self.validated_data.get('chat_preference', ''),
-            )
-        case.save()
-        return case    
+    

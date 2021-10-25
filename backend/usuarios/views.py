@@ -1,8 +1,11 @@
+from django.contrib.auth.models import Permission
+from django.http import response
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 from rest_auth.registration.views import RegisterView
 from .serializers import (
     TeacherRegistrationSerializer, ClientRegistrationSerializer,
-    LoginSerializer, ProfileSerializer, CreateCaseSerializer)
+    LoginSerializer, ProfileSerializer, CreateCaseSerializer,CreateCase2Serializer)
 from django.contrib.auth import authenticate, login, logout
 from django.db.models import query
 from django_rest_passwordreset.signals import reset_password_token_created
@@ -11,8 +14,8 @@ from rest_framework.decorators import api_view
 from rest_framework import generics, serializers
 from rest_framework import status
 from rest_framework.response import Response
-
-from .models import Client, User
+from rest_framework.permissions import IsAuthenticated
+from .models import Case, Client, User, Case2
 
 ####        CLIENTE        ####
 
@@ -83,6 +86,22 @@ def reset_password(sender, instance, reset_password_token, *args, **kwargs):
     print(
         f"\n[+]Recupera la contraseña del correo '{reset_password_token.user.email}' \n[-]Usando el token '{reset_password_token.key}' desde la API http://localhost:8000/user/reset_password/confirm/.")
 
-### CREAR CASO ###
-class CreateCaseView(RegisterView):
-    serializer_class = CreateCaseSerializer
+
+
+
+
+@api_view(['POST'])
+def savecase(request,email=None  ):
+    
+        if request.method == "POST":
+            CASEserialize= CreateCase2Serializer(data=request.data)
+            if CASEserialize.is_valid() :
+               
+                    
+                Case2.client_ide = User.objects.get(email=email)
+                
+                
+                
+                CASEserialize.save()
+                return Response(CASEserialize.data,status=status.HTTP_201_CREATED)
+                return Response(CASEserialize.data,status=status.HTTP_400_BAD_REQUEST)

@@ -38,5 +38,6 @@ urlpatterns = [
 
     ###      Create Case ###
     path('cases/create/', CreateCaseView.as_view()),
+    path('cases/create2/', views.savecase,name="savecase"),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
