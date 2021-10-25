@@ -123,15 +123,15 @@ class ProfileSerializer(serializers.ModelSerializer):
 
 
 class GetcasebyIdSerializer(serializers.ModelSerializer):
-   class Meta:
-    model =  Case
-    fields = (
-         "id",
-         'name',
-         'description',
-         'files',
-         'type_status',
-         'status',
-         'chat_preference'
-    )
+    class Meta:
+        model =  Case
+        fields = (
+            "id",
+            'name',
+            'description',
+            'files',
+            'type_status',
+            'status',
+            'chat_preference'
+        )
 

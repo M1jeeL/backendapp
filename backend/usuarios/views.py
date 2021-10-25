@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_auth.registration.views import RegisterView
 from .serializers import (
-    TeacherRegistrationSerializer, ClientRegistrationSerializer,
+    GetcasebyIdSerializer, TeacherRegistrationSerializer, ClientRegistrationSerializer,
     LoginSerializer, ProfileSerializer)
 from django.contrib.auth import authenticate, login, logout
 from django.db.models import query
@@ -77,15 +77,15 @@ def logout_client(request):
     return Response({'Logout': "[-] Logout successfuly!"}, status=status.HTTP_200_OK)
 
 
-### BUSCAR CASOS POR ID ###
-@api_view(['GET'])
-def get_id (request, id):
-    cases = Case.objects.get(id=id)
-    serializers = GetcasebyIdSerializer (cases,many=true)
-    return Response(serializer.data)
-
 ###     CAMBIAR CONTRASEÑA     ###
 @receiver(reset_password_token_created)
 def reset_password(sender, instance, reset_password_token, *args, **kwargs):
     print(
         f"\n[+]Recupera la contraseña del correo '{reset_password_token.user.email}' \n[-]Usando el token '{reset_password_token.key}' desde la API http://localhost:8000/user/reset_password/confirm/.")
+
+### BUSCAR CASOS POR ID ###
+@api_view(['GET'])
+def get_id (request, id):
+    cases = Case.objects.get(id=id)
+    serializers  = GetcasebyIdSerializer(cases)
+    return Response(serializers.data)
