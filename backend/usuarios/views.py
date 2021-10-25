@@ -91,17 +91,18 @@ def reset_password(sender, instance, reset_password_token, *args, **kwargs):
 
 
 @api_view(['POST'])
-def savecase(request  ):
-    
+def savecase(request ):
+        
         if request.method == "POST":
             CASEserialize= CreateCase2Serializer(data=request.data)
-            if CASEserialize.is_valid() :
-               
+            if CASEserialize.is_valid() and request.user.is_authenticated: 
+                
                     
                 Case2.client_ide = Client.rut
                 
                 
                 
                 CASEserialize.save()
+
                 return Response(CASEserialize.data,status=status.HTTP_201_CREATED)
                 return Response(CASEserialize.data,status=status.HTTP_400_BAD_REQUEST)
