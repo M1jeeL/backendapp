@@ -120,17 +120,14 @@ class Teacher(models.Model):
 
 ###     TABLA CASOS     ###
 class Case(models.Model):
-    ###     HEREDA DE LA TABLA USER     ###
     case_teacher = models.OneToOneField(
         Teacher, on_delete=models.CASCADE, blank=True, null=True)
     case_client = models.OneToOneField(
         Client, on_delete=models.CASCADE, blank=True, null=True)
-    #cases_client = models.ForeignKey(Teacher, related_name='RUT', on_delete=models.CASCADE,null=True, blank=True)
-    #cases_client = models.ForeignKey(Client, related_name='RUT', on_delete=models.CASCADE)
-
-    ###     ATRIBUTOS     ###
-    name = models.CharField(max_length=60)
-    files = models.FileField(upload_to='documents/cases/', verbose_name='Casos')
+    #client = models.ForeignKey(Client, on_delete=models.CASCADE, blank=True, null=True)
+    #client_ide =  models.CharField(max_length=60,blank=True, null=True)
+    title = models.CharField(max_length=60)
+    files = models.FileField(upload_to='documents/cases2/', verbose_name='Archivos')
     description = models.CharField(max_length=300)
     type_status = models.CharField(
         max_length=1,
@@ -159,3 +156,5 @@ class Case(models.Model):
     class Meta:
         verbose_name = 'case'
         verbose_name_plural = 'cases'
+    def __str__(self):
+        return self.title

@@ -2,7 +2,8 @@ from django.shortcuts import render
 from rest_auth.registration.views import RegisterView
 from .serializers import (
     TeacherRegistrationSerializer, ClientRegistrationSerializer,
-    LoginSerializer, ProfileSerializer, CreateCaseSerializer)
+    LoginSerializer, ProfileSerializer, CreateCaseSerializer, CaseSerializer,
+    CaseByIdSerializer, PutCaseByIdSerializer)
 from django.contrib.auth import authenticate, login, logout
 from django.db.models import query
 from django_rest_passwordreset.signals import reset_password_token_created
@@ -12,7 +13,7 @@ from rest_framework import generics, serializers
 from rest_framework import status
 from rest_framework.response import Response
 
-from .models import Client, User
+from .models import Client, User, Case
 
 ####        CLIENTE        ####
 
@@ -40,6 +41,10 @@ class ProfilesViewUser(generics.ListAPIView):
     queryset = User.objects.all()
     serializer_class = ProfileSerializer
 
+
+###     VIEW REGISTRO CASO (EDITAR)     ###
+class CaseRegisterView(RegisterView):
+    serializer_class = CreateCaseSerializer
 
 ###     PROFILE CLIENT BY ID     ###
 @api_view(['GET'])
@@ -84,5 +89,67 @@ def reset_password(sender, instance, reset_password_token, *args, **kwargs):
         f"\n[+]Recupera la contraseña del correo '{reset_password_token.user.email}' \n[-]Usando el token '{reset_password_token.key}' desde la API http://localhost:8000/user/reset_password/confirm/.")
 
 ### CREAR CASO ###
-class CreateCaseView(RegisterView):
-    serializer_class = CreateCaseSerializer
+@api_view(['POST'])
+def savecase(request  ):
+    if request.method == "POST":
+        CASEserialize = CreateCaseSerializer(data=request.data)
+        if CASEserialize.is_valid() and request.user.is_authenticated:  
+            Case.client_ide = Client.rut
+            CASEserialize.save()
+            return Response(CASEserialize.data,status=status.HTTP_201_CREATED)
+        return Response(CASEserialize.data,status=status.HTTP_400_BAD_REQUEST)
+
+###     LISTA CASOS     ###
+class CasesViews(generics.ListAPIView):
+    queryset = Case.objects.all()
+    serializer_class = CaseSerializer
+
+@api_view(['GET'])
+def list_cases(request):
+    stat = request.query_params.get('status')
+    type = request.query_params.get('type')
+    querySet = query_all_avaible()
+
+    if (stat  and type ):
+        querySet = query_by_type_status(type,stat)
+    elif (type and (stat is None or stat is "")):
+        querySet = query_by_type(type)
+    elif ((type is None or type is "")  and stat ):
+        querySet = query_by_status(stat)
+    serializer = CaseSerializer(querySet,many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+def query_all_avaible():
+    querySet = Case.objects.filter(status= 'D')
+    return querySet
+
+def query_by_status(status):
+    querySet = Case.objects.filter(status=status)
+    return querySet
+
+def query_by_type(type):
+    querySet = Case.objects.filter(type_status=type).filter(status='D')
+    return querySet
+
+def query_by_type_status(type,status):
+    querySet = Case.objects.filter(type_status=type).filter(status=status)
+    return querySet
+
+
+###     CASOS POR ID     ###
+@api_view(['GET'])
+def get_case(request, id):
+    cases = Case.objects.get(id=id)
+    serializers  = CaseByIdSerializer(cases)
+    return Response(serializers.data)
+
+### ACTUALIZAR ESTADO CASO####
+
+@api_view(['PUT'])
+def edit_case(request, id):
+    case = Case.objects.get(id=id)
+    serializer = PutCaseByIdSerializer(case, data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
