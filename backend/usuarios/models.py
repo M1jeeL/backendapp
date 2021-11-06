@@ -129,7 +129,7 @@ class Case(models.Model):
 
     ###     ATRIBUTOS     ###
     name = models.CharField(max_length=60)
-    files = models.FileField(upload_to='documents/cases/', verbose_name='Casos')
+    files = models.FileField(upload_to='documents/cases/', verbose_name='Archivos')
     description = models.CharField(max_length=300)
     type_status = models.CharField(
         max_length=1,
@@ -158,3 +158,4 @@ class Case(models.Model):
     class Meta:
         verbose_name = 'case'
         verbose_name_plural = 'cases'
+        #EJEMPLO

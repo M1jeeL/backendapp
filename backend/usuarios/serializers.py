@@ -47,13 +47,13 @@ class TeacherRegistrationSerializer(RegisterSerializer):
     first_name = serializers.CharField(required=True)
     last_name = serializers.CharField(required=True)
     rut = serializers.CharField(required=True)
-    teacher = serializers.PrimaryKeyRelatedField(read_only=True,)
+    teacher = serializers.PrimaryKeyRelatedField(read_only=True)
     phone = serializers.CharField(required=True)
     high_school = serializers.CharField(required=True)
     expertise = serializers.ChoiceField(
         required=True, choices=expertise_status)
     careers = serializers.CharField(required=True)
-    docfile = serializers.FileField(required=False)
+    docfile = serializers.FileField(required=True)
     img = serializers.ImageField(required=False)
 
     def get_cleaned_data(self):
@@ -141,7 +141,27 @@ class ProfileSerializer(serializers.ModelSerializer):
         )
 
 
-###     CREATE CASE             ####
+### OBTENER CASO POR ID ###
+
+
+class GetcasebyIdSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Case
+        fields = (
+            "id",
+            'name',
+            'description',
+            'files',
+            'type_status',
+            'status',
+            'chat_preference',
+            'case_client',
+            'case_teacher',
+            'created_at'
+        )
+
+        ###     CREATE CASE             ####
+
 
 class CreateCaseSerializer(serializers.ModelSerializer):
     name = serializers.CharField(required=True)
@@ -190,3 +210,21 @@ class CreateCaseSerializer(serializers.ModelSerializer):
         )
         case.save()
         return case
+
+###     PERFIL DE CASOS     ###
+
+
+class CaseSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Case
+        fields = (
+            'id',
+            'name',
+            'description',
+            'type_status',
+            'status',
+            'chat_preference',
+            'case_teacher',
+            'case_client'
+        )
