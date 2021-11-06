@@ -159,7 +159,9 @@ class GetcasebyIdSerializer(serializers.ModelSerializer):
             'type_status',
             'status',
             'chat_preference',
-            'case_client'
+            'case_client',
+            'case_teacher',
+            'created_at'
         )
 
         ###     CREATE CASE             ####
