@@ -186,3 +186,19 @@ class CreateCaseSerializer(serializers.ModelSerializer):
             )
         case.save()
         return case    
+
+###     PERFIL DE CASOS     ###
+class CaseSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Case
+        fields = (
+            'id',
+            'name',
+            'description',
+            'type_status',
+            'status',
+            'chat_preference',
+            'case_teacher',
+            'case_client'
+        )
