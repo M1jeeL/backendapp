@@ -6,5 +6,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     #Declarando urls de usuarios
     path('', include('usuarios.urls'), name='Usuarios'),
+    path('news', include('news.urls'), name='Noticias'),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
