@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     ###     APPS LOCALES     ###
     'usuarios',
+    'news',
     ###     APPS EXTERNAS     ###
     'rest_framework',
     'django_rest_passwordreset',
