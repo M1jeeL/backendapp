@@ -47,13 +47,13 @@ class TeacherRegistrationSerializer(RegisterSerializer):
     first_name = serializers.CharField(required=True)
     last_name = serializers.CharField(required=True)
     rut = serializers.CharField(required=True)
-    teacher = serializers.PrimaryKeyRelatedField(read_only=True,)
+    teacher = serializers.PrimaryKeyRelatedField(read_only=True)
     phone = serializers.CharField(required=True)
     high_school = serializers.CharField(required=True)
     expertise = serializers.ChoiceField(
         required=True, choices=expertise_status)
-    careers = serializers.ChoiceField(required=True, choices=careers_status)
-    docfile = serializers.FileField(required=False)
+    careers = serializers.CharField(required=True)
+    docfile = serializers.FileField(required=True)
     img = serializers.ImageField(required=False)
 
     def get_cleaned_data(self):
@@ -91,7 +91,6 @@ class TeacherRegistrationSerializer(RegisterSerializer):
 
 ###     REGISTRAR CLIENT     ###
 
-
 class ClientRegistrationSerializer(RegisterSerializer):
     client = serializers.PrimaryKeyRelatedField(read_only=True,)
     first_name = serializers.CharField(required=True)
@@ -127,10 +126,7 @@ class ClientRegistrationSerializer(RegisterSerializer):
 class LoginSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = (
-            'username',
-            'email'
-        )
+        fields = ['first_name', 'last_name', 'email', 'is_teacher', 'id']
 
 ###     PERFIL DEL USUARIO     ###
 
