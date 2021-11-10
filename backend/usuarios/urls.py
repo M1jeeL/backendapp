@@ -1,6 +1,6 @@
 from django.urls import path, include,re_path
 
-from .views import TeacherRegistrationView, ClientRegistrationView, CreateCaseView
+from .views import TeacherRegistrationView, ClientRegistrationView, CreateCaseView, savecase
 from . import views
 from django.conf import settings
 from django.conf.urls.static import static
@@ -40,7 +40,8 @@ urlpatterns = [
     path('cases/<int:id>', views.get_id, name='obtener_casos_por_id '),
 
     ###      Create Case ###
-    path('cases/create/', CreateCaseView.as_view()),
+    #path('cases/create/', CreateCaseView.as_view()),
+     path('cases/create/', views.savecase, name='create_case'),
 
     ###   Find  All Cases ###
     path('cases/',views.list_cases,name='Casos'),

@@ -117,3 +117,14 @@ def list_cases(request):
     serializer = CaseSerializer(querySet,many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
+
+@api_view(['POST'])
+def savecase(request ):
+        
+        if request.method == "POST":
+            CASEserialize= CreateCaseSerializer(data=request.data)
+            if CASEserialize.is_valid() and request.user.is_authenticated: 
+                Case.client_ide = Client.rut
+                CASEserialize.save()
+                return Response(CASEserialize.data,status=status.HTTP_201_CREATED)
+                return Response(CASEserialize.data,status=status.HTTP_400_BAD_REQUEST)
