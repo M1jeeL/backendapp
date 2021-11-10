@@ -127,4 +127,4 @@ def savecase(request ):
                 Case.client_ide = Client.rut
                 CASEserialize.save()
                 return Response(CASEserialize.data,status=status.HTTP_201_CREATED)
-                return Response(CASEserialize.data,status=status.HTTP_400_BAD_REQUEST)
+            return Response(CASEserialize.data,status=status.HTTP_400_BAD_REQUEST)
