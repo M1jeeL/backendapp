@@ -164,20 +164,20 @@ class GetcasebyIdSerializer(serializers.ModelSerializer):
 
 
 class CreateCaseSerializer(serializers.ModelSerializer):
-    title = serializers.CharField(required=True)
+    name = serializers.CharField(required=True)
     description = serializers.CharField(required=True)
     files = serializers.FileField(required=False)
     type_status = serializers.ChoiceField(required=True,choices=type_status)
     status = serializers.ChoiceField(choices=status,read_only=True)
     chat_preference = serializers.ChoiceField(required=True,choices=chat_preference)
-    client_ide = serializers.CharField(required = False)
+    case_client = serializers.CharField(required = False)
     
     
     class Meta:
         model = Case
         fields = (
-            'client_ide',
-            'title',
+            'case_client',
+            'name',
             'description',
             'files',
             'type_status',
