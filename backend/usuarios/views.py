@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import  render
 from rest_auth.registration.views import RegisterView
 from rest_framework.fields import empty
 
@@ -105,7 +105,7 @@ class CasesViews(generics.ListAPIView):
 @api_view(['GET'])
 def list_cases(request):
     stat = request.query_params.get('status')
-    type = request.query_params.get('type')
+    type = request.query_params.get('type_status')
     querySet = query_all_avaible()
 
     if (stat  and type ):
@@ -124,7 +124,7 @@ def savecase(request ):
         if request.method == "POST":
             CASEserialize= CreateCaseSerializer(data=request.data)
             if CASEserialize.is_valid() and request.user.is_authenticated: 
-                Case.client_ide = Client.rut
+                
                 CASEserialize.save()
                 return Response(CASEserialize.data,status=status.HTTP_201_CREATED)
             return Response(CASEserialize.data,status=status.HTTP_400_BAD_REQUEST)
