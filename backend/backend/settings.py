@@ -40,15 +40,16 @@ INSTALLED_APPS = [
     ###     APPS LOCALES     ###
     'usuarios',
     ###     APPS EXTERNAS     ###
+   
     'rest_framework',
     'django_rest_passwordreset',
     'django.contrib.sites',
     'allauth',
     'allauth.account',
-    'allauth.socialaccount',
+    #'allauth.socialaccount',
     'rest_auth',
     'rest_auth.registration',
-    'rest_framework.authtoken',
+    #'rest_framework.authtoken',
 ]
 
 AUTH_USER_MODEL = "usuarios.User"
