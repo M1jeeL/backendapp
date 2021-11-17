@@ -31,6 +31,9 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'allauth.account',
+    'django_rest_passwordreset',
+    'django.contrib.sites',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -42,10 +45,10 @@ INSTALLED_APPS = [
     ###     APPS EXTERNAS     ###
    
     'rest_framework',
-    'django_rest_passwordreset',
-    'django.contrib.sites',
+    
+    
     'allauth',
-    'allauth.account',
+    
     #'allauth.socialaccount',
     'rest_auth',
     'rest_auth.registration',
