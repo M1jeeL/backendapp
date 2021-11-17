@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.db.models.fields import related
+from django.core.validators import FileExtensionValidator
 #from django.conf import settings
 
 
@@ -129,7 +130,7 @@ class Case(models.Model):
 
     ###     ATRIBUTOS     ###
     name = models.CharField(max_length=60)
-    files = models.FileField(upload_to='documents/cases/', verbose_name='Archivos')
+    files = models.FileField(upload_to='documents/cases/', verbose_name='Archivos',validators=[FileExtensionValidator( ['pdf'] ) ])
     description = models.CharField(max_length=300)
     type_status = models.CharField(
         max_length=1,

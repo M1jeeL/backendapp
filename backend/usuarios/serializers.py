@@ -1,3 +1,4 @@
+from django.core import validators
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 
@@ -7,6 +8,9 @@ from rest_framework.authtoken.models import Token
 from .models import Client, Teacher, User, Case
 
 ###     VARIABLES GLOBALES     ###
+ALLOWED_EXTENTIONS_FILES = ["pdf","doc","docx"]
+ALLOWED_EXTIONS_IMAGES = ['png','jpg']
+
 expertise_status = [
     ('L', 'Legal'),
     ('F', 'Financiera')
@@ -53,8 +57,8 @@ class TeacherRegistrationSerializer(RegisterSerializer):
     expertise = serializers.ChoiceField(
         required=True, choices=expertise_status)
     careers = serializers.CharField(required=True)
-    docfile = serializers.FileField(required=True)
-    img = serializers.ImageField(required=False)
+    docfile = serializers.FileField(required=True,validators = [validators.FileExtensionValidator(ALLOWED_EXTENTIONS_FILES)])
+    img = serializers.ImageField(required=False,validators = [validators.FileExtensionValidator(ALLOWED_EXTIONS_IMAGES)])
 
     def get_cleaned_data(self):
         data = super(TeacherRegistrationSerializer, self).get_cleaned_data()
@@ -166,7 +170,7 @@ class GetcasebyIdSerializer(serializers.ModelSerializer):
 class CreateCaseSerializer(serializers.ModelSerializer):
     name = serializers.CharField(required=True)
     description = serializers.CharField(required=True)
-    files = serializers.FileField(required=False)
+    files = serializers.FileField(required=False,validators = [validators.FileExtensionValidator(ALLOWED_EXTENTIONS_FILES)])
     type_status = serializers.ChoiceField(required=True,choices=type_status)
     status = serializers.ChoiceField(choices=status,read_only=True)
     chat_preference = serializers.ChoiceField(required=True,choices=chat_preference)
@@ -184,6 +188,7 @@ class CreateCaseSerializer(serializers.ModelSerializer):
             'status',
             'chat_preference'
         )
+        
 ###     PERFIL DE CASOS     ###
 
 
