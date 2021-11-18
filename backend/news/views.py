@@ -19,10 +19,10 @@ def getArticleData(article):
     link = article.div.h2.a['href']
 
     date = article.find('time')
-    dateString = article.find('time').string
+    dateString = date.string
 
     category = date.next_sibling
-    categoryString = date.next_sibling.string
+    categoryString = category.string
 
     description = article.h2.next_sibling.next_sibling.string
 
@@ -40,5 +40,4 @@ def getNews(request):
         articleFormated = getArticleData(article)
         articleCopy = articleFormated.copy()
         returnedArticles.append(articleCopy)
-    print(returnedArticles)
     return HttpResponse([returnedArticles])
