@@ -24,20 +24,23 @@ def getArticleData(article):
     category = date.next_sibling
     categoryString = category.string
 
-    description = article.h2.next_sibling.next_sibling.string
+    description = title.next_sibling.next_sibling.string
 
     return {'img': img, 'title': titleString, 'link': link, 'date': dateString, 'category': categoryString, 'description': description}
 
-
+def formatPage(page):
+    
+    soup = BeautifulSoup(page, 'html.parser')
+    news = soup.find_all('article')
+    formatedNews = []
+    for new in news:
+        newFormated = getArticleData(new)
+        newCopy = newFormated.copy()
+        formatedNews.append(newCopy)
+    return formatedNews
 # Create your views here.
 @api_view(['GET'])
 def getNews(request):
     page = urlopen(autonomia_financiera_page)
-    soup = BeautifulSoup(page, 'html.parser')
-    articles = soup.find_all('article')
-    returnedArticles = []
-    for article in articles:
-        articleFormated = getArticleData(article)
-        articleCopy = articleFormated.copy()
-        returnedArticles.append(articleCopy)
-    return HttpResponse([returnedArticles])
+    pageFormated = formatPage(page)
+    return HttpResponse([pageFormated])
