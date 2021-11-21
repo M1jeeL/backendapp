@@ -4,7 +4,7 @@ from django.contrib.auth import get_user_model
 from rest_auth.registration.serializers import RegisterSerializer
 from rest_framework.authtoken.models import Token
 #from django.contrib.auth.hashers import make_password
-from .models import Client, Teacher, User
+from .models import Client, Teacher, User,Opcion,Respuesta,Pregunta
 
 ###     VARIABLES GLOBALES     ###
 expertise_status = [

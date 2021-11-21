@@ -1,6 +1,6 @@
 from django.urls import path, include
 
-from .views import TeacherRegistrationView, ClientRegistrationView
+from .views import TeacherRegistrationView, ClientRegistrationView, RespuestaDetail, PreguntaList
 from . import views
 from django.conf import settings
 from django.conf.urls.static import static
@@ -34,6 +34,13 @@ urlpatterns = [
 
     ####        CAMBIO DE CONTRASEÑA USUARIOS        ####
     path('user/reset_password/', include('django_rest_passwordreset.urls', namespace='reset_pass_client')),
+
+     #### cuestionario
+
+     path('Pregunta/create/<int:pk>', views.PreguntaList.as_view()),
+     path('Pregunta/View/<int:pk>', views.PreguntaDetail.as_view()),
+     path('respuesta/send/<int:pk>',views.RespuestaDetail.as_view()),
+
 ]
 
 

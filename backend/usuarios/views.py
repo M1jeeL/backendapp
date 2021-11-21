@@ -19,7 +19,8 @@ from .serializers import PreguntaSerializer, RespuestaSerializer,ViewPreguntasSe
 class ClientRegistrationView(RegisterView):
     serializer_class = ClientRegistrationSerializer
 
-
+class TeacherRegistrationView(RegisterView):
+    serializer_class = TeacherRegistrationSerializer
 ###     VIEW PERFIL CLIENT     ###
 class ProfilesViewClient(generics.ListAPIView):
     queryset = User.objects.filter(is_client=True)
