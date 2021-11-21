@@ -1,0 +1,42 @@
+#header {
+    background: linear-gradient(135deg,#e15b57,#3d3935);
+    color: #ffffff;
+  }
+  
+  #branding h1 {
+    color: #ffffff;
+  }
+  
+  div.breadcrumbs {
+    background: #e15b57;
+    color: #ffffff;
+  }
+  
+  .login .submit-row {
+    padding: 0px !important;
+  }
+  
+  input[type="submit"],
+  input[type="button"],
+  .submit-row input {
+    width: 100%;
+    background: linear-gradient(135deg,#3d3935,#e11e16);
+  }
+  
+  .module h2,
+  .module caption,
+  .inline-group h2 {
+    background: linear-gradient(135deg,#3d3935,#e11e16);
+  }
+
+  body{
+    background: url("../img/background.png");
+  }
+
+  table{
+    border: #8b0000 3px solid;
+  }
+
+  .module{
+    border: #8b0000 3px solid;
+  }
