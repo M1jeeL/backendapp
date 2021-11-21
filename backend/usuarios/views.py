@@ -11,16 +11,11 @@ from rest_framework.decorators import api_view
 from rest_framework import generics, serializers
 from rest_framework import status
 from rest_framework.response import Response
+from .models import Pregunta, Respuesta
+from .models import Client, User, Case
+from .serializers import PreguntaSerializer, RespuestaSerializer,ViewPreguntasSerializer
 
-from .models import Client, User
 
-####        CLIENTE        ####
-
-###     VIEW REGISTRO TEACHER     ###
-class TeacherRegistrationView(RegisterView):
-    serializer_class = TeacherRegistrationSerializer
-
-###     VIEW REGISTRO CLIENT     ###
 class ClientRegistrationView(RegisterView):
     serializer_class = ClientRegistrationSerializer
 
@@ -82,3 +77,20 @@ def logout_client(request):
 def reset_password(sender, instance, reset_password_token, *args, **kwargs):
     print(
         f"\n[+]Recupera la contraseña del correo '{reset_password_token.user.email}' \n[-]Usando el token '{reset_password_token.key}' desde la API http://localhost:8000/user/reset_password/confirm/.")
+
+### Cuestionario ###
+
+class PreguntaList(generics.ListCreateAPIView):
+    queryset = Pregunta.objects.all()
+    serializer_class = PreguntaSerializer
+
+
+class PreguntaDetail(generics.ListAPIView):
+    queryset = Pregunta.objects.all()
+    serializer_class =ViewPreguntasSerializer
+
+
+
+class RespuestaDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Respuesta.objects.all()
+    serializer_class = RespuestaSerializer

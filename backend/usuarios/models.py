@@ -156,3 +156,46 @@ class Case(models.Model):
     class Meta:
         verbose_name = 'case'
         verbose_name_plural = 'cases'
+
+    ### cuestionario ###
+class Pregunta(models.Model):
+
+    User= models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True)
+
+    codigo = models.CharField(max_length=32, unique=True)
+    texto = models.TextField(default="")
+    orden = models.IntegerField(default=0)
+
+    class Meta:
+        ordering = ('orden',)
+
+    def __str__(self):
+        return self.codigo
+
+class Opcion(models.Model):
+
+
+    pregunta = models.ForeignKey(Pregunta, related_name='opciones', on_delete=models.CASCADE)
+    texto = models.CharField(max_length=255, default="")
+    valor = models.IntegerField(default=0)
+    salto = models.ForeignKey(Pregunta, blank=True, null=True, on_delete = models.CASCADE)
+    orden = models.IntegerField(default=0)
+
+    class Meta:
+        ordering = ('orden',)
+
+    def __str__(self):
+        return self.texto
+
+
+class Respuesta(models.Model):
+
+
+    pregunta = models.ForeignKey(Pregunta, related_name='respuestas', on_delete = models.CASCADE)
+    opcion = models.ForeignKey(Opcion, on_delete = models.CASCADE)
+
+    class Meta:
+            ordering = ('pregunta',)
+
+    def __str__(self):
+        return self.opcion.__str__()
