@@ -22,12 +22,14 @@ SECRET_KEY = 'n06t=1cc7==i)*dagnbk$cwmm=trxyiynwza!0qvu5j9$%t*w0'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["10.0.2.2","localhost"]
+ALLOWED_HOSTS = ["10.0.2.2","localhost","127.0.0.1"]
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'allauth.socialaccount',
+    'rest_framework.authtoken',
     'allauth.account',
     'django_rest_passwordreset',
     'django.contrib.sites',
@@ -46,10 +48,10 @@ INSTALLED_APPS = [
     
     'allauth',
     
-    #'allauth.socialaccount',
+    
     'rest_auth',
     'rest_auth.registration',
-    #'rest_framework.authtoken',
+    
 ]
 
 AUTH_USER_MODEL = "usuarios.User"

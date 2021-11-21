@@ -5,8 +5,11 @@ from django.contrib.auth.models import  Group
 
 from allauth.account.models import EmailAddress
 from django.contrib.sites.models import Site
-
+from allauth.socialaccount.models import  SocialAccount
 from django_rest_passwordreset.models import ResetPasswordToken
+from rest_framework.authtoken.models import TokenProxy
+from allauth.socialaccount.models import SocialToken, SocialAccount, SocialApp
+
 from .models import  User, Teacher, Client,Case
 
 # Register your models here.
@@ -33,3 +36,7 @@ admin.site.unregister(Group)
 admin.site.unregister(Site)
 admin.site.unregister(ResetPasswordToken)
 admin.site.unregister(EmailAddress)
+admin.site.unregister(TokenProxy)
+admin.site.unregister(SocialToken)
+admin.site.unregister(SocialAccount)
+admin.site.unregister(SocialApp)
