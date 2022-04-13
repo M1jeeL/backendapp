@@ -45,7 +45,7 @@ Backend App's
     
     Primer paso: Hacer un makemigrations 
     Entrar al directorio backendapp
-    -> (venv) C:\Users\Tincho\Desktop\backendapp> cd backendapp
+    -> (venv) C:\Users\XXXXX\Desktop\backendapp> cd backendapp
     Escribir el comando de Makemigrations
     -> (venv) C:\Users\XXXXX\Desktop\backendapp\backend> python manage.py makemigrations
     
